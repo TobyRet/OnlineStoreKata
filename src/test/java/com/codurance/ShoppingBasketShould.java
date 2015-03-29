@@ -9,10 +9,9 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static java.util.Arrays.asList;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ShoppingBasketShould {
@@ -23,6 +22,7 @@ public class ShoppingBasketShould {
 	private List<String> outOfStockItemsList;
 	private ShoppingBasket shoppingBasket;
 	@Mock Inventory inventory;
+	@Mock Messenger messenger;
 
 	@Before
 	public void initialise() {
@@ -35,7 +35,9 @@ public class ShoppingBasketShould {
 	use_inventory_to_check_all_items_are_in_stock() {
 		given(inventory.has(any(Item.class))).willReturn(true);
 
-		assertThat(shoppingBasket.checkItemsAreInStock(), is(outOfStockItemsList));
+		shoppingBasket.checkItemsAreInStock();
+
+		verify(messenger, never()).informUser(outOfStockItemsList);
 	}
 
 	@Test
@@ -46,13 +48,16 @@ public class ShoppingBasketShould {
 		given(inventory.has(firstItem)).willReturn(true);
 		given(inventory.has(secondItem)).willReturn(false);
 
-		assertThat(shoppingBasket.checkItemsAreInStock(), is(outOfStockItemsList));
+		shoppingBasket.checkItemsAreInStock();
+
+		verify(messenger, times(1)).informUser(outOfStockItemsList);
 	}
 
 	private ShoppingBasket aShoppingBasketWith(List<Item> someItems) {
 		someItems = asList(firstItem, secondItem);
 
-		ShoppingBasket basket = new ShoppingBasket(inventory);
+		ShoppingBasket basket = new ShoppingBasket(inventory, messenger);
+
 		for (Item item : someItems) {
 			basket.add(item);
 		}
