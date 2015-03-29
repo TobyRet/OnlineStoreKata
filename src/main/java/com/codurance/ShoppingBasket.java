@@ -22,14 +22,16 @@ public class ShoppingBasket {
             }
         }
 
-        System.out.println(outOfStockItems);
-
-        if(!outOfStockItems.isEmpty()) {
-            messenger.informUser(outOfStockItems);
-        }
+        informUser(outOfStockItems);
     }
 
     public void add(Item item) {
         items.add(item);
+    }
+
+    private void informUser(List<String> outOfStockItems) {
+        if(!outOfStockItems.isEmpty()) {
+            messenger.informUser(outOfStockItems);
+        }
     }
 }

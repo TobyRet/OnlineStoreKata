@@ -16,11 +16,11 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class ShoppingBasketShould {
 
-	private List<Item> someItems;
 	private static final Item firstItem = new Item("Item 1");
 	private static final Item secondItem = new Item("Item 2");
 	private List<String> outOfStockItemsList;
 	private ShoppingBasket shoppingBasket;
+	private List<Item> someItems;
 	@Mock Inventory inventory;
 	@Mock Messenger messenger;
 
