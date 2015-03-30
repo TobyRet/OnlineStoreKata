@@ -5,33 +5,36 @@ import java.util.List;
 
 public class ShoppingBasket {
     private List<Item> items = new ArrayList();
+    private List<String> outOfStockItems = new ArrayList<String>();
     private Inventory inventory;
     private final Messenger messenger;
+    private final Checkout checkout;
 
-    public ShoppingBasket(Inventory inventory, Messenger messenger) {
+    public ShoppingBasket(Inventory inventory, Messenger messenger, Checkout checkout) {
         this.inventory = inventory;
         this.messenger = messenger;
+        this.checkout = checkout;
     }
 
     public void checkItemsAreInStock() {
-        List<String> outOfStockItems = new ArrayList();
+        listOutOfStockItems();
 
+        if(outOfStockItems.isEmpty()) {
+            checkout.payFor(items);
+        } else {
+            messenger.informUser(outOfStockItems);
+        }
+    }
+
+    private void listOutOfStockItems() {
         for(Item item : items) {
             if(!inventory.has(item)) {
                 outOfStockItems.add(item.getItemName());
             }
         }
-
-        informUser(outOfStockItems);
     }
 
     public void add(Item item) {
         items.add(item);
-    }
-
-    private void informUser(List<String> outOfStockItems) {
-        if(!outOfStockItems.isEmpty()) {
-            messenger.informUser(outOfStockItems);
-        }
     }
 }
