@@ -11,7 +11,6 @@ public class Checkout {
 	private final Emailer emailer;
 
 	public Checkout(PaymentGateway paymentGateway, Emailer emailer) {
-
 		this.paymentGateway = paymentGateway;
 		this.emailer = emailer;
 	}
