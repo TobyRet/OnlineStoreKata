@@ -1,7 +1,10 @@
-package com.codurance;
+package com.codurance.ECommerce;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.codurance.Communications.Messenger;
+import com.codurance.Stock.Inventory;
+import com.codurance.Stock.Item;
 
 public class ShoppingBasket {
     private List<Item> items = new ArrayList();

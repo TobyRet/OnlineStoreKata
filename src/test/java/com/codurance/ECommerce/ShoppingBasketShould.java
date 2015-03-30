@@ -1,7 +1,10 @@
-package com.codurance;
+package com.codurance.ECommerce;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.codurance.Communications.Messenger;
+import com.codurance.Stock.Inventory;
+import com.codurance.Stock.Item;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,8 +19,8 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class ShoppingBasketShould {
 
-	private final Item firstItem = new Item("Item 1");
-	private final Item secondItem = new Item("Item 2");
+	private final Item firstItem = new Item("Item 1", 10);
+	private final Item secondItem = new Item("Item 2", 10);
 	private List<String> outOfStockItemsList;
 	private ShoppingBasket shoppingBasket;
 	private List<Item> someItems;

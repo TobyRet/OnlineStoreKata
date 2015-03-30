@@ -1,4 +1,4 @@
-package com.codurance;
+package com.codurance.Communications;
 
 import java.util.List;
 
