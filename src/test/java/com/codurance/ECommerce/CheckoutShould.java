@@ -10,6 +10,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.never;
@@ -48,7 +50,7 @@ public class CheckoutShould {
 	receive_error_message_if_payment_is_unsuccessful() {
 		given(paymentGateway.process(any(Payment.class))).willReturn(CREDIT_CHECK_FAILED);
 
-		checkout.payFor(someItems);
+		assertThat(checkout.payFor(someItems), is(CREDIT_CHECK_FAILED));
 
 		verify(emailer, never()).send(PAYMENT_SUCCESSFUL);
 	}

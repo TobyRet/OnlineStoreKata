@@ -15,18 +15,20 @@ public class Checkout {
 		this.emailer = emailer;
 	}
 
-	public void payFor(List<Item> items) {
+	public String payFor(List<Item> items) {
 		Payment payment = total(items);
+		String paymentGateWayMessage = paymentGateway.process(payment);
 
-		if(paymentGateway.process(payment).equals(PAYMENT_SUCCESSFUL)) {
+		if (paymentGateWayMessage.equals(PAYMENT_SUCCESSFUL)) {
 			emailer.send(PAYMENT_SUCCESSFUL);
 		}
+		return paymentGateWayMessage;
 	}
 
 	private Payment total(List<Item> items) {
 		Integer itemTotal = 0;
 
-		for(Item item : items) {
+		for (Item item : items) {
 			itemTotal = itemTotal + item.price();
 		}
 
